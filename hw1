@@ -1,0 +1,24 @@
+# Заводим в программе бота. Для связи с Телеграм кладем в него токен, котрый нам дал BotFather
+bot = telebot.TeleBot(token)
+
+# Пишем первую функцию, которая отвечает "Привет" на команды /start, /help
+@bot.message_handler(commands=['start', 'help'])
+def send_welcome(message):
+    #answer_message = 'Hello, ' + message.chat.first_name
+    #bot.send_message(message.chat.id, answer_message)
+    #sticker_id = 'CAACAgIAAxkBAAMOYfwR20yHuoT0-FJn2yFLwudHtVAAAusEAAJrxMoKhdoiofyRMxwjBA'
+    #sticker_id='CAACAgIAAxkBAAICNmH8ETUD7daaHeGSy62XLSVu0X8MAAKKAQACK15TCxtDbMsAAT60RCME'
+    #sticker_id='CAACAgIAAxkBAAICOGH8ETlh_FoN7VRx23e4gzhvOnZTAALkLgAC4KOCBxo7zxhxD6pyIwQ'
+    sticker_id='CAACAgIAAxkBAAIB12G7e_gkxBLkTFp8j1osw4wj3N-6AALjAQACHAAB3QeINHVJmhCeJiME'
+    bot.send_sticker(message.chat.id, sticker_id)
+
+# >>> Функция для печати номера стикера
+@bot.message_handler(content_types=['sticker'])
+def print_sticker(message):
+    print(message.sticker.file_id)
+    sticker_id = message.sticker.file_id
+    bot.send_sticker(message.chat.id, sticker_id)
+
+# Запускаем бота. Он будет работать до тех пор, пока работает ячейка (крутится значок слева).
+# Остановим ячейку - остановится бот
+bot.polling()
